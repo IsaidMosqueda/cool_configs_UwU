@@ -250,6 +250,12 @@ local default_plugins = {
     { "<leader>f",  "<CMD>Telescope commander<CR>", mode = "n" },
     { "<leader>fc", "<CMD>Telescope commander<CR>", mode = "n" }
   },
+  },
+
+  -- Windsurf
+  {
+    'Exafunction/windsurf.vim',
+    event = 'BufEnter'
   }
 }
 
@@ -327,6 +333,8 @@ commander.add({
     desc = "Run lua function",
     cmd = function() print("ANONYMOUS LUA FUNCTION") end,
     keys = {"n", "<leader>alf" },
-  }, {
-  }
+  },
+
 })
+
+
