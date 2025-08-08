@@ -53,6 +53,7 @@ local plugins = {
         "mypy",
         "ruff",
         "pyright",
+        "clangd",
       },
     },
   },
