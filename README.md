@@ -11,8 +11,13 @@ Here lies the configuration for my development setup. Later I'll add the descrip
 ## Oh my Fish
 
 # Use
+First run this to install NvChad:
 
-just go to your configs location:
+```bash
+git clone -b v2.0 https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+```
+
+then go to your configs location:
 
 ```bash
 cd ~/.config
@@ -21,7 +26,6 @@ cd ~/.config
 then in there just clone this repo and unpack it in the config directory:
 ```bash
 git clone git@github.com:IsaidMosqueda/cool_configs_UwU.git && cd cool_configs_UwU && mv * ../ && cd ..
-
 ```
 
 
