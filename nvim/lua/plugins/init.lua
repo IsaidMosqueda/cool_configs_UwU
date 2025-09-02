@@ -251,6 +251,12 @@ local default_plugins = {
     { "<leader>fc", "<CMD>Telescope commander<CR>", mode = "n" }
   },
   }
+  -- Windsurf
+  {
+    'Exafunction/windsurf.vim',
+    event = 'BufEnter'
+  }
+
 }
 
 local config = require("core.utils").load_config()
