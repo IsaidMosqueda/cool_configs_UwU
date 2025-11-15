@@ -12,6 +12,12 @@ Here lies the configuration for my development setup. Later I'll add the descrip
 
 # Use
 
+First, setup all git installs trough ssh (http is for loosers):
+
+```bash
+git config --global url."git@github.com:".insteadOf "https://github.com/"
+```
+
 just go to your configs location:
 
 ```bash
