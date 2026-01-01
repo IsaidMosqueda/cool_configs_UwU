@@ -1,6 +1,6 @@
 # By default Reload config with shft + cmd + , 
 
-theme = rose-pine
+#theme = rose-pine
 background = #000000
 background-opacity = 0.8
 background-blur-radius = 20
