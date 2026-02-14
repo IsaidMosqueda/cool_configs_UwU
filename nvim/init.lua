@@ -11,7 +11,7 @@ require("core.utils").load_mappings()
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 
 -- bootstrap lazy.nvim!
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   require("core.bootstrap").gen_chadrc_template()
   require("core.bootstrap").lazy(lazypath)
 end
@@ -21,3 +21,16 @@ vim.opt.rtp:prepend(lazypath)
 require "plugins"
 
 vim.wo.relativenumber = true
+
+-- Auto-start OpenCode with autocmd
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = function()
+    -- Small delay to ensure all plugins are loaded
+    vim.defer_fn(function()
+      if require('opencode') then
+        -- Optional: Auto-open OpenCode on startup (uncomment if desired)
+        -- require('opencode.api').toggle()
+      end
+    end, 1000)
+  end,
+})

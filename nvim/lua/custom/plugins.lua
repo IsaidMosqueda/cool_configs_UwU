@@ -45,7 +45,7 @@ local plugins = {
     end,
   },
   {
-    "williamboman/mason.nvim",
+    "willliamboman/mason.nvim",
     opts = {
       ensure_installed = {
         "black",
@@ -53,10 +53,34 @@ local plugins = {
         "mypy",
         "ruff",
         "pyright",
-      },
+},
     },
   },
+  
+  -- Enhanced notifications for better UI feedback
   {
+    "rcarriga/nvim-notify",
+    config = function()
+      require("notify").setup({
+        stages = "fade_in_slide_out",
+        timeout = 3000,
+        background_colour = "#000000",
+        render = "minimal",
+      })
+      vim.notify = require("notify")
+    end,
+  },
+  -- Beautiful markdown preview for better chat viewing
+  {
+    "ellisonleao/glow.nvim",
+    config = true,
+    cmd = "Glow",
+    keys = {
+      { "<leader>mg", "<cmd>Glow<cr>", desc = "Markdown Glow Preview" }
+    }
+  },
+
+{
     "neovim/nvim-lspconfig",
     config = function()
       require "plugins.configs.lspconfig"
@@ -64,56 +88,143 @@ local plugins = {
     end,
   },
   {
-  "yetone/avante.nvim",
-  event = "VeryLazy",
-  lazy = false,
-  version = "*", -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
-  opts = {
-    -- add any opts here
-  },
-  -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-  build = "make",
-  -- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-
-
-  dependencies = {
-    "stevearc/dressing.nvim",
-    "nvim-lua/plenary.nvim",
-    "MunifTanjim/nui.nvim",
-    --- The below dependencies are optional,
-    "echasnovski/mini.pick", -- for file_selector provider mini.pick
-    "nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-    "hrsh7th/nvim-cmp", -- autocompletion for avante commands and mentions
-    "ibhagwan/fzf-lua", -- for file_selector provider fzf
-    "nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-    "zbirenbaum/copilot.lua", -- for providers='copilot'
-    {
-      -- support for image pasting
-      "HakonHarnes/img-clip.nvim",
-      event = "VeryLazy",
-      opts = {
-        -- recommended settings
-        default = {
-          embed_image_as_base64 = false,
-          prompt_for_file_name = false,
-          drag_and_drop = {
-            insert_mode = true,
+    "sudo-tee/opencode.nvim",
+    config = function()
+      require("opencode").setup({
+        preferred_completion = "blink", -- or "nvim-cmp" if you prefer
+        default_global_keymaps = true,
+        keymap_prefix = "<leader>o",
+        -- Force clear any conflicts with Space+o
+        keymap = {
+          editor = {
+            ["<leader>og"] = { 'toggle' }, -- Force set main toggle
           },
-          -- required for Windows users
-          use_absolute_path = true,
         },
+        ui = {
+          position = "right",
+          window_width = 0.45,
+          display_model = true,
+          display_context_size = true,
+          display_cost = true,
+          icons = {
+            preset = "nerdfonts",
+          },
+          -- Enhanced markdown rendering
+          render_markdown = true,
+          syntax_highlighting = true,
+        },
+        ui = {
+          position = "right",
+          window_width = 0.40,
+          display_model = true,
+          display_context_size = true,
+          display_cost = true,
+          icons = {
+            preset = "nerdfonts",
+          },
+        },
+        context = {
+          enabled = true,
+          current_file = {
+            enabled = true,
+            show_full_path = true,
+          },
+          selection = {
+            enabled = true,
+          },
+          diagnostics = {
+            info = false,
+            warn = true,
+            error = true,
+          },
+        },
+      })
+    end,
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      {
+        "MeanderingProgrammer/render-markdown.nvim",
+        opts = {
+          anti_conceal = { enabled = false },
+          file_types = { 'markdown', 'opencode_output', 'Avante' },
+          heading = {
+            sign = false,
+            icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
+          },
+          code = {
+            sign = false,
+            width = "block",
+            right_pad = 1,
+            left_pad = 1,
+          },
+          dash = {
+            width = "full",
+          },
+          bullet = {
+            icons = { "●", "○", "◆", "◇" },
+          },
+          checkbox = {
+            unchecked = { icon = " 󰄱 " },
+            checked = { icon = "  " },
+          },
+          quote = {
+            icon = "│",
+            repeat_linebreak = true,
+          },
+          pipe_table = {
+            padding = 1,
+            border = {
+              "┌", "─", "┬", "┐",
+              "│", "│", "│",
+              "├", "─", "┼", "┤",
+              "│", "│", "│", 
+              "└", "─", "┴", "┘",
+            },
+          },
+        },
+        ft = { 'markdown', 'opencode_output', 'Avante' },
       },
-    },
+    -- Additional markdown enhancement for better visual experience
     {
-      -- Make sure to set this up properly if you have lazy=true
-      'MeanderingProgrammer/render-markdown.nvim',
-      opts = {
-        file_types = { "markdown", "Avante" },
+      "OXY2DEV/markview.nvim",
+      event = "VeryLazy",
+      dependencies = {
+        "nvim-treesitter/nvim-treesitter",
+        "nvim-tree/nvim-web-devicons"
       },
-      ft = { "markdown", "Avante" },
+      config = function()
+        require("markview").setup({
+          modes = { "n", "no", "c" },
+          hybrids = { "n" },
+          callback = {
+            on_enable = function (_, win)
+              vim.wo[win].conceallevel = 2
+              vim.wo[win].concealcursor = ""
+            end,
+          },
+        })
+      end,
+    },
+      -- For autocomplete - choose one
+      'saghen/blink.cmp',
+      {
+        'hrsh7th/nvim-cmp',
+        config = function()
+          require('cmp').setup({
+            sources = {
+              { name = 'opencode' },
+            },
+          })
+        end,
+      },
+      
+      -- For file picker - choose one (snacks recommended)
+      'folke/snacks.nvim',
+      -- 'nvim-telescope/telescope.nvim',
+      -- 'ibhagwan/fzf-lua',
     },
   },
-},
+  
 {
     "f-person/git-blame.nvim",
     -- load the plugin at startup
