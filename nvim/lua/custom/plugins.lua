@@ -45,11 +45,15 @@ local plugins = {
     end,
   },
   {
-    "williamboman/mason.nvim",
+    "willliamboman/mason.nvim",
     opts = {
       ensure_installed = {
+        "black",
+        "debugpy",
+        "mypy",
+        "ruff",
         "pyright",
-      },
+},
     },
   },
   
