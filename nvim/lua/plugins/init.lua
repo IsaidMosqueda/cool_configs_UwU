@@ -250,12 +250,6 @@ local default_plugins = {
     { "<leader>f",  "<CMD>Telescope commander<CR>", mode = "n" },
     { "<leader>fc", "<CMD>Telescope commander<CR>", mode = "n" }
   },
-  },
-
-  -- Windsurf
-  {
-    'Exafunction/windsurf.vim',
-    event = 'BufEnter'
   }
 }
 
