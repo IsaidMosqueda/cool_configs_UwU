@@ -69,6 +69,7 @@ local default_plugins = {
 
   {
     "nvim-treesitter/nvim-treesitter",
+    branch = "master",
     event = { "BufReadPost", "BufNewFile" },
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
@@ -313,7 +314,7 @@ commander.add({
     desc = "Show function signaure (hover)",
     cmd = "<CMD>lua vim.lsp.buf.hover()<CR>",
     keys = {
-      {{"n", "x"}, "K", silent_noremap },
+      {{"n", "x"}, "K", { noremap = true, silent = true } },
       {"i", "<C-k>" },
     }
   }, {
