@@ -71,7 +71,11 @@ local default_plugins = {
     "nvim-treesitter/nvim-treesitter",
     lazy = false,
     branch = "main",
-    build = ":TSUpdate",
+    build = function()
+      if vim.fn.executable("tree-sitter") == 1 then
+        vim.cmd("TSUpdate")
+      end
+    end,
     config = function()
       require("plugins.configs.treesitter").setup()
     end,

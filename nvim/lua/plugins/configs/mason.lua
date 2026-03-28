@@ -2,6 +2,7 @@ local options = {
   ensure_installed = {
     "lua-language-server",
     "clangd",
+    "tree-sitter-cli",
   },
 
   PATH = "skip",

@@ -12,7 +12,15 @@ end
 local function setup()
   dofile(vim.g.base46_cache .. "syntax")
   require("nvim-treesitter").setup()
-  require("nvim-treesitter").install(parsers)
+
+  if vim.fn.executable("tree-sitter") == 0 then
+    vim.notify(
+      "tree-sitter CLI not found (nvim-treesitter main requires it). Run :MasonInstall tree-sitter-cli or install tree-sitter ≥ 0.26 from your OS.",
+      vim.log.levels.WARN
+    )
+  else
+    require("nvim-treesitter").install(parsers)
+  end
 
   local group = vim.api.nvim_create_augroup("NvimTreesitterMain", { clear = true })
   vim.api.nvim_create_autocmd("FileType", {
