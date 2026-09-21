@@ -45,7 +45,7 @@ local plugins = {
     end,
   },
   {
-    "willliamboman/mason.nvim",
+    "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
         "black",
@@ -88,142 +88,67 @@ local plugins = {
     end,
   },
   {
-    "sudo-tee/opencode.nvim",
-    config = function()
-      require("opencode").setup({
-        preferred_completion = "blink", -- or "nvim-cmp" if you prefer
-        default_global_keymaps = true,
-        keymap_prefix = "<leader>o",
-        -- Force clear any conflicts with Space+o
-        keymap = {
-          editor = {
-            ["<leader>og"] = { 'toggle' }, -- Force set main toggle
-          },
-        },
-        ui = {
-          position = "right",
-          window_width = 0.45,
-          display_model = true,
-          display_context_size = true,
-          display_cost = true,
-          icons = {
-            preset = "nerdfonts",
-          },
-          -- Enhanced markdown rendering
-          render_markdown = true,
-          syntax_highlighting = true,
-        },
-        ui = {
-          position = "right",
-          window_width = 0.40,
-          display_model = true,
-          display_context_size = true,
-          display_cost = true,
-          icons = {
-            preset = "nerdfonts",
-          },
-        },
-        context = {
-          enabled = true,
-          current_file = {
-            enabled = true,
-            show_full_path = true,
-          },
-          selection = {
-            enabled = true,
-          },
-          diagnostics = {
-            info = false,
-            warn = true,
-            error = true,
-          },
-        },
-      })
-    end,
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-      {
-        "MeanderingProgrammer/render-markdown.nvim",
-        opts = {
-          anti_conceal = { enabled = false },
-          file_types = { 'markdown', 'opencode_output', 'Avante' },
-          heading = {
-            sign = false,
-            icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
-          },
-          code = {
-            sign = false,
-            width = "block",
-            right_pad = 1,
-            left_pad = 1,
-          },
-          dash = {
-            width = "full",
-          },
-          bullet = {
-            icons = { "●", "○", "◆", "◇" },
-          },
-          checkbox = {
-            unchecked = { icon = " 󰄱 " },
-            checked = { icon = "  " },
-          },
-          quote = {
-            icon = "│",
-            repeat_linebreak = true,
-          },
-          pipe_table = {
-            padding = 1,
-            border = {
-              "┌", "─", "┬", "┐",
-              "│", "│", "│",
-              "├", "─", "┼", "┤",
-              "│", "│", "│", 
-              "└", "─", "┴", "┘",
-            },
-          },
-        },
-        ft = { 'markdown', 'opencode_output', 'Avante' },
+    "MeanderingProgrammer/render-markdown.nvim",
+    opts = {
+      anti_conceal = { enabled = false },
+      file_types = { 'markdown', 'Avante' },
+      heading = {
+        sign = false,
+        icons = { "󰲡 ", "󰲣 ", "󰲥 ", "󰲧 ", "󰲩 ", "󰲫 " },
       },
-    -- Additional markdown enhancement for better visual experience
-    {
-      "OXY2DEV/markview.nvim",
-      event = "VeryLazy",
-      dependencies = {
-        "nvim-treesitter/nvim-treesitter",
-        "nvim-tree/nvim-web-devicons"
+      code = {
+        sign = false,
+        width = "block",
+        right_pad = 1,
+        left_pad = 1,
       },
-      config = function()
-        require("markview").setup({
-          modes = { "n", "no", "c" },
-          hybrids = { "n" },
-          callback = {
-            on_enable = function (_, win)
-              vim.wo[win].conceallevel = 2
-              vim.wo[win].concealcursor = ""
-            end,
-          },
-        })
-      end,
+      dash = {
+        width = "full",
+      },
+      bullet = {
+        icons = { "●", "○", "◆", "◇" },
+      },
+      checkbox = {
+        unchecked = { icon = " 󰄱 " },
+        checked = { icon = "  " },
+      },
+      quote = {
+        icon = "│",
+        repeat_linebreak = true,
+      },
+      pipe_table = {
+        padding = 1,
+        border = {
+          "┌", "─", "┬", "┐",
+          "│", "│", "│",
+          "├", "─", "┼", "┤",
+          "│", "│", "│", 
+          "└", "─", "┴", "┘",
+        },
+      },
     },
-      -- For autocomplete - choose one
-      'saghen/blink.cmp',
-      {
-        'hrsh7th/nvim-cmp',
-        config = function()
-          require('cmp').setup({
-            sources = {
-              { name = 'opencode' },
-            },
-          })
+    ft = { 'markdown', 'Avante' },
+  },
+{
+  "OXY2DEV/markview.nvim",
+  event = "VeryLazy",
+  dependencies = {
+    "nvim-treesitter/nvim-treesitter",
+    "nvim-tree/nvim-web-devicons"
+  },
+  config = function()
+    require("markview").setup({
+      modes = { "n", "no", "c" },
+      hybrids = { "n" },
+      callback = {
+        on_enable = function (_, win)
+          vim.wo[win].conceallevel = 2
+          vim.wo[win].concealcursor = ""
         end,
       },
-      
-      -- For file picker - choose one (snacks recommended)
-      'folke/snacks.nvim',
-      -- 'nvim-telescope/telescope.nvim',
-      -- 'ibhagwan/fzf-lua',
-    },
-  },
+    })
+  end,
+},
   
 {
     "f-person/git-blame.nvim",

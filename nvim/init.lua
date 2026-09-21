@@ -21,16 +21,3 @@ vim.opt.rtp:prepend(lazypath)
 require "plugins"
 
 vim.wo.relativenumber = true
-
--- Auto-start OpenCode with autocmd
-vim.api.nvim_create_autocmd("VimEnter", {
-  callback = function()
-    -- Small delay to ensure all plugins are loaded
-    vim.defer_fn(function()
-      if require('opencode') then
-        -- Optional: Auto-open OpenCode on startup (uncomment if desired)
-        -- require('opencode.api').toggle()
-      end
-    end, 1000)
-  end,
-})

@@ -55,7 +55,7 @@ local default_plugins = {
 
   {
     "lukas-reineke/indent-blankline.nvim",
-    version = "2.20.7",
+    main = "ibl",
     event = "User FilePost",
     opts = function()
       return require("plugins.configs.others").blankline
@@ -63,7 +63,11 @@ local default_plugins = {
     config = function(_, opts)
       require("core.utils").load_mappings "blankline"
       dofile(vim.g.base46_cache .. "blankline")
-      require("indent_blankline").setup(opts)
+      -- base46 still defines the v2 highlight names; map them onto ibl v3's
+      vim.api.nvim_set_hl(0, "IblIndent", { link = "IndentBlanklineChar" })
+      vim.api.nvim_set_hl(0, "IblWhitespace", { link = "IndentBlanklineSpaceChar" })
+      vim.api.nvim_set_hl(0, "IblScope", { link = "IndentBlanklineContextChar" })
+      require("ibl").setup(opts)
     end,
   },
 
